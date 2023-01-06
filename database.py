@@ -1,9 +1,11 @@
-def getUser(json):
+import json
+
+def getUser(data):
   f = open("python/database/userdata.json")
   x = f.read()
-  email = json["login"]
-  pwd = json["pwd"]
-  userdata = jsonFormatter.loads(x)
+  email = data["login"]
+  pwd = data["pwd"]
+  userdata = json.loads(x)
   try:
     user = userdata[email] #  Gets user by email.
   except:

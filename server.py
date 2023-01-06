@@ -8,7 +8,7 @@
 #-----------------------------------------------------------------------#
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from main.py import response
+from main import response
 import time
 import json
 
@@ -37,7 +37,7 @@ class webserver:
     self.hostName = ip
     self.serverPort = port
   
-  def stert():
+  def stert(self):
     server = HTTPServer((self.hostName, self.serverPort), Server)
     print("[Python API] -- Server started http://%s:%s" % (self.hostName, self.serverPort) + '\n')
 

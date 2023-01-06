@@ -1,4 +1,4 @@
-from main.py import database
+from main import database
 
 class interface:
   def start():
