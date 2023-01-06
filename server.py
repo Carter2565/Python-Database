@@ -8,22 +8,22 @@
 #-----------------------------------------------------------------------#
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from main.py import database
+from main.py import response
 import time
 import json
 
 class Server(BaseHTTPRequestHandler):
   def _set_response(self):
     self.send_response(200)
-    self.send_header('Content-type', 'text/html')
+    self.send_header('Content-type', 'text/json')
     self.end_headers()
 
   def do_GET(self):
     self.send_response(200)
-    self.send_header("Content-type", "text/html")
+    self.send_header("Content-type", "text/json")
     self.end_headers()
 
-    content = decode((self.path)[7:])
+    content = response((self.path)[7:])
     self.wfile.write(bytes(content, "utf-8"))
 
     try:
