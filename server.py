@@ -8,7 +8,7 @@
 #-----------------------------------------------------------------------#
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from main import response
+from database import response
 import time
 import json
 
