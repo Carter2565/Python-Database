@@ -17,9 +17,6 @@ class response:
     # 400 Request error
     # 204 No content to be sent
 
-
-
-
 class content(response):
   def __init__(self, functionn):
     self.function = function
