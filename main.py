@@ -1,9 +1,10 @@
+import imp
+import json
 import argparse
 from server import webserver
 from interface import interface
-import imp
 settings, config = imp.load_source('settings')
-import json
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-interface', action='store_true', help='Enables UI')
@@ -45,6 +46,8 @@ class database(login, content):
         else:
           response.error(204)
     elif(opperation == 'login'): # A login request
+      pass
+    elif(opperation == 'manual'): # A request for a manualy set value
       pass
     else:
       response.error(400)
