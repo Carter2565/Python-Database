@@ -3,7 +3,7 @@ import argparse
 from server import webserver
 from database import database
 from interface import interface
-settings, config = imp.load_source('./','settings.config')
+settings, config = imp.load_source('settings.config')
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-interface', action='store_true', help='Enables UI')
