@@ -1,5 +1,4 @@
-import imp
-settings, config = imp.load_source('settings', 'settings.config')
+from settings import settings
 from database import database
 import requests
 

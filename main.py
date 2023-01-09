@@ -1,9 +1,8 @@
-import imp
 import argparse
 from server import webserver
+from settings import settings
 from database import database
 from interface import interface
-settings, config = imp.load_source('settings', 'settings.config')
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-interface', action='store_true', help='Enables UI')
