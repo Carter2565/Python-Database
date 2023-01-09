@@ -37,7 +37,7 @@ class webserver:
     self.hostName = ip
     self.serverPort = port
   
-  def stert(self):
+  def start(self):
     server = HTTPServer((self.hostName, self.serverPort), Server)
     print("[Python API] -- Server started http://%s:%s" % (self.hostName, self.serverPort) + '\n')
 
