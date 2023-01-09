@@ -12,5 +12,5 @@ class interface:
         exit(200)
       request = f"{settings.ip}:{settings.port}/json='{request}'"
       print(request)
-      responce = requests.get(request)
+      responce = requests.get(url = request)
     
