@@ -1,5 +1,5 @@
 import imp
-settings, config = imp.load_source('settings.config')
+settings, config = imp.load_source('settings', 'settings.config')
 from database import database
 import requests
 
