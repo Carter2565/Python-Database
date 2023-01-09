@@ -1,6 +1,6 @@
 import argparse
 from server import webserver
-from settings import settings as settings, config
+from settings import settings as config, settings
 from database import database
 from interface import interface
 
