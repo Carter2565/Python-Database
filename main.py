@@ -8,8 +8,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-interface', action='store_true', help='Enables UI')
 args = parser.parse_args()
  
-if(args.interface):
-  interface.start()
-
 database = webserver(config.ip, config.port)
 database.start()
+
+if(args.interface):
+  interface.start()
