@@ -10,8 +10,8 @@ class interface:
         break
       elif(request == 'exit(200)'):
         exit(200)
-      request = f"{settings.ip}:{settings.port}/json='{request}'"
+      request = f"http://{settings.ip}:{settings.port}/json='{request}'"
       print(request)
       response = requests.get(url = request)
-      print('\n\n\n'+response)
+      print('\n\n\n'+response.text)
     
