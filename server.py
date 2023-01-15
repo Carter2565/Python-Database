@@ -8,7 +8,7 @@
 #-----------------------------------------------------------------------#
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from database import response
+
 import time
 import json
 
@@ -29,20 +29,22 @@ class Server(BaseHTTPRequestHandler):
   #   self.send_header("Content-type", "text/json")
   #   self.end_headers()
 
-  #   content = response((self.path)[7:])
-  #   self.wfile.write(bytes(content, "utf-8"))
+    # content = response((self.path)[7:])
+    # self.wfile.write(bytes(content, "utf-8"))
 
-  #   try:
-  #     print(json.loads(str(self.path)[7:]))
-  #   except json.decoder.JSONDecodeError:
-  #     print('400 - No json data')
+    # try:
+    #   print(json.loads(str(self.path)[7:]))
+    # except json.decoder.JSONDecodeError:
+    #   print('400 - No json data')
 
   def do_POST(self):
+    from database import response
     content_length = int(self.headers['Content-Length'])
     body = self.rfile.read(content_length)
     json_data = json.loads(body)
     print(json_data)
-    self._send_response(response(json_data).response)
+    res = response(json_data).response
+    self._send_response(res)
 
 class webserver:
   def __init__(self, ip, port):

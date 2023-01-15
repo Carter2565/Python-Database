@@ -3,17 +3,16 @@ import base64
 import settings
 
 class response:
-  response = 'hi'
   def __init__(self, json):
     self.request = json
     self.response = database.request(self.request)
-  print(response)
+    print(response)
   def error(self, code):
     self.response = code 
     # 400 Request error
     # 401 Unauthorized
     # 204 No content to be sent
-
+  # response = None
 class login:
   def __init__(self):
     return

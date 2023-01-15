@@ -14,7 +14,7 @@ database = webserver(config.server.ip, config.server.port)
 def interface():
   os.system('python3 interface.py')
 
-if(args.interface):
-  threading.Thread(target=interface, args=[]).start()  
+# if(args.interface):
+threading.Thread(target=interface, args=[]).start()  
   
 threading.Thread(target=database.start(), args=[]).start()  
