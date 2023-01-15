@@ -1,17 +1,18 @@
 from settings import settings 
 from database import database
 import requests
+import var_dump
+import json
 
-class interface:
-  def start():
-    while(True):
-      request = input("Enter json:")
-      if(request == 'exit()'):
-        break
-      elif(request == 'exit(200)'):
-        exit(200)
-      request = f"http://{settings.ip}:{settings.port}/json='{request}'"
-      print(request)
-      response = requests.get(url = request)
-      print('\n\n\n'+response.text)
-    
+while(True):
+  request = input("Enter json:")
+  if(request == 'exit()'):
+    exit(200)
+
+  print('\n'+request)
+
+  # response = requests.post(f"http://{settings.server.ip}:{settings.server.port}", json = request)
+  # print('\n\n\n'+var_dump(response.json()))
+  data = {'key': 'value'}
+  response = requests.post('http://localhost:8000', json=data)
+  print(response.json())

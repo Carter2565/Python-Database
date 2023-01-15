@@ -13,24 +13,36 @@ import time
 import json
 
 class Server(BaseHTTPRequestHandler):
-  def _set_response(self):
+  # def _set_response(self):
+  #   self.send_response(200)
+  #   self.send_header('Content-type', 'text/json')
+  #   self.end_headers()
+  def _send_response(self, message):
     self.send_response(200)
-    self.send_header('Content-type', 'text/json')
+    self.send_header('Content-type', 'application/json')
     self.end_headers()
+    # print(message+'-----------')
+    self.wfile.write(bytes(message, "utf8"))
 
-  def do_GET(self):
-    self.send_response(200)
-    self.send_header("Content-type", "text/json")
-    self.end_headers()
+  # def do_GET(self):
+  #   self.send_response(200)
+  #   self.send_header("Content-type", "text/json")
+  #   self.end_headers()
 
-    content = response((self.path)[7:])
-    self.wfile.write(bytes(content, "utf-8"))
+  #   content = response((self.path)[7:])
+  #   self.wfile.write(bytes(content, "utf-8"))
 
-    try:
-      print(json.loads(str(self.path)[7:]))
-    except json.decoder.JSONDecodeError:
-      print('400 - No json data')
+  #   try:
+  #     print(json.loads(str(self.path)[7:]))
+  #   except json.decoder.JSONDecodeError:
+  #     print('400 - No json data')
 
+  def do_POST(self):
+    content_length = int(self.headers['Content-Length'])
+    body = self.rfile.read(content_length)
+    json_data = json.loads(body)
+    print(json_data)
+    self._send_response(response(json_data).response)
 
 class webserver:
   def __init__(self, ip, port):
