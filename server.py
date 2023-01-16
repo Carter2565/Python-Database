@@ -21,8 +21,8 @@ class Server(BaseHTTPRequestHandler):
     self.send_response(200)
     self.send_header('Content-type', 'application/json')
     self.end_headers()
-    # print(message+'-----------')
-    self.wfile.write(bytes(message, "utf8"))
+    # print(str(message)+'-----------')
+    self.wfile.write(bytes(str(message), "utf8"))
 
   # def do_GET(self):
   #   self.send_response(200)
@@ -38,13 +38,20 @@ class Server(BaseHTTPRequestHandler):
     #   print('400 - No json data')
 
   def do_POST(self):
-    from database import response
+    from database import response as server
     content_length = int(self.headers['Content-Length'])
     body = self.rfile.read(content_length)
     json_data = json.loads(body)
-    print(json_data)
-    res = response(json_data).response
-    self._send_response(res)
+    # print(json_data)
+    # response(json_data)
+    response = server(json_data).response
+
+    self.send_response(200)
+    self.send_header('Content-type', 'application/json')
+    self.end_headers()
+    # print(str(message)+'-----------')
+    self.wfile.write(bytes(str(response), "utf8"))
+    # self._send_response(res.response)
 
 class webserver:
   def __init__(self, ip, port):

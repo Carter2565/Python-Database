@@ -5,14 +5,12 @@ import var_dump
 import json
 
 while(True):
-  request = input("Enter json:")
+  request = input("Enter json: ")
   if(request == 'exit()'):
     exit(200)
 
-  print('\n'+request)
-
-  # response = requests.post(f"http://{settings.server.ip}:{settings.server.port}", json = request)
-  # print('\n\n\n'+var_dump(response.json()))
-  data = {'key': 'value'}
-  response = requests.post('http://localhost:8000', json=data)
-  print(response.json())
+  try:
+    response = requests.post(f"http://{settings.server.ip}:{settings.server.port}", json = request)
+    print('\n' + str(response.json()) + '\n')
+  except:
+    print('\n Response error \n')
