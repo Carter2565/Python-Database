@@ -7,7 +7,7 @@ class response:
     self.request = json
     db = database()
     print(self.request)
-    self.response = db.request(request = str(self.request))
+    self.response = db.request(str(self.request))
     print(self.response)
 
     # 400 Request error
