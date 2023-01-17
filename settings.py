@@ -4,10 +4,15 @@ class settings:
     ip = 'localhost'
     port = 8000
   #-----------------
-  class interface:
-  # Interface Server settings
-    ip = 'localhost'
-    port = 80 # If 80 interface with sudo
+  class error:
+  # Error settings
+    codes = {
+      200:'Ok',
+      202:'Accepted',
+      204:'No content to be sent',
+      400:'Request error',
+      401:'Unauthorized'
+    }
   #-----------------
 # File settings:
 

@@ -13,17 +13,6 @@ import time
 import json
 
 class Server(BaseHTTPRequestHandler):
-  # def _set_response(self):
-  #   self.send_response(200)
-  #   self.send_header('Content-type', 'text/json')
-  #   self.end_headers()
-  def _send_response(self, message):
-    self.send_response(200)
-    self.send_header('Content-type', 'application/json')
-    self.end_headers()
-    # print(str(message)+'-----------')
-    self.wfile.write(bytes(str(message), "utf8"))
-
   # def do_GET(self):
   #   self.send_response(200)
   #   self.send_header("Content-type", "text/json")
