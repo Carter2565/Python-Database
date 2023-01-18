@@ -24,7 +24,7 @@ class login:
     userdata = database.getUserdata() # gets userdata from file
     try:
       user = userdata[email] #  Gets user by email.
-    except:
+    except KeyError:
       return(400)
     if (not(pwd == user["pwd"])):
       user = None
@@ -65,15 +65,14 @@ class database(login):
         return(json.dumps(login.login(data)))
 
     elif(opperation == 'profile'): # A profile/username request
-      with open("python/database/profiledata.json", "r") as f:
-        data = f.read()
-      userdata = json.loads(data)
-      with 'username' in data['username']:
+      userdata = database.getProfiledata()
+      if('username' in userdata):
         username = data['username']
-      if username in userdata:
-        return userdata[username]
-      else:
-        return(204)
+        profiledata = userdata[username]
+        return(profiledata)
+      except KeyError:
+        return(400)
+
 
     elif(opperation == 'assets'): # A asset request
       pass
