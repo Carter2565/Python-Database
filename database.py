@@ -70,7 +70,7 @@ class database(login):
         username = data['username']
         profiledata = userdata[username]
         return(profiledata)
-      except KeyError:
+      else:
         return(400)
 
 
