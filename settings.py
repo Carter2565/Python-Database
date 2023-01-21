@@ -14,7 +14,11 @@ class settings:
       401:'Unauthorized'
     }
   #-----------------
-# File settings:
-
-  launchDir = './' # For assets Ex: ./database/profiledata.json OR ./database/userdata.json
-#---------------
+  class assets:
+  # Asset Settings
+    page = 3 #length of asset pages
+  #-----------------
+  class file:
+  # File settings:
+    dir = './' # For assets Ex: ./database/profiledata.json OR ./database/userdata.json
+  #---------------

@@ -1,6 +1,7 @@
 import json
 import base64
 from settings import settings
+import pandas as pd
 
 class response:
   def __init__(self, json):
@@ -33,19 +34,24 @@ class login:
 
 class database(login):
   def getUserdata():
-    with open(f"{settings.launchDir}database/userdata.json", "r") as f:
+    with open(f"{settings.file.dir}database/userdata.json", "r") as f:
       userdata = json.loads(f.read())
       return(userdata) 
 
   def getProfiledata():
-    with open(f"{settings.launchDir}database/profiledata.json", "r") as f:
+    with open(f"{settings.file.dir}database/profiledata.json", "r") as f:
       profiledata = json.loads(f.read())
       return(profiledata)
 
   def getAsset():
-    with open(f"{settings.launchDir}database/assets/assets.json", 'r') as f:
+    with open(f"{settings.file.dir}database/assets/assets.json", 'r') as f:
       assets = json.loads(f.read())
       return(assets)
+  def getObject():
+    with open(f"{settings.file.dir}database/objectdata.json", "r") as f:
+      objectdata = json.loads(f.read())
+      return(objectdata) 
+
 
 
   def request(self, request): # 
@@ -66,17 +72,19 @@ class database(login):
 
     elif(opperation == 'profile'): # A profile/username request
       userdata = database.getProfiledata()
-      if('username' in userdata):
+      if(data['username'] in userdata):
         username = data['username']
         profiledata = userdata[username]
-        return(profiledata)
+        return(json.dumps(profiledata))
       else:
         return(400)
 
-
-    elif(opperation == 'assets'): # A asset request
+    elif(opperation == 'asset'): # A asset request
       pass
 
+    elif(opperation == 'object'): # A object request. This is miscellaneous things ex: public goals or featured items etc
+      objectdata = database.getObject()
+      return(json.dumps(objectdata))
     else:
       return(400)
 

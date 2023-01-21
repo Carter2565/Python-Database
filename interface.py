@@ -10,17 +10,15 @@ while(True):
 
 
   response = requests.post(f"http://{settings.server.ip}:{settings.server.port}", json = request)
-  error = str(response.json())
+  response = response.json()
   # print(f'-{error}-')
-  statuscode = False
-  for code in settings.error.codes:
-  # if (str(error) in settings.error.codes):
-    # code = response
-    # print(f'{error}--{code}')
-    if(error == str(code)):
-      statuscode = True
-      print(f'\n {code} -- {settings.error.codes[code]} \n')
-  if(not statuscode):
-  # else:
-    print('\n' + str(response.json()) + '\n')   
+  try:
+    error = int(response)
+  except TypeError:
+    error = None
+  finally:
+    if (error in settings.error.codes):
+      print(f'\n {error} -- {settings.error.codes[error]} \n')
+    else:
+      print('\n' + str(response) + '\n')   
  
