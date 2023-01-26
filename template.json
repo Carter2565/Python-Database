@@ -13,7 +13,7 @@
 
 {"opperation": "user", "login": "2565tube@gmail.com", "pwd": "098f6bcd4621d373cade4e832627b4f6"}
 {"opperation": "profile", "username": "Carter2565"}
-{"opperation": "assets", "path": ""}
+{"opperation": "assets", "type": "", "path": ""}
 
 <?php
   $cSession = curl_init();

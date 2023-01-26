@@ -87,5 +87,3 @@ class database(login):
       return(json.dumps(objectdata))
     else:
       return(400)
-
-
