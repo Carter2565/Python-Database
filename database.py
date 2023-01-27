@@ -22,7 +22,7 @@ class login:
       pwd = data["pwd"] # gets the password 
     except KeyError:
       return(400)
-    userdata = database.getUserdata() # gets userdata from file
+    userdata = database.get.Userdata() # gets userdata from file
     try:
       user = userdata[email] #  Gets user by email.
     except KeyError:
@@ -33,26 +33,29 @@ class login:
     return(202)
 
 class database(login):
-  def getUserdata():
-    with open(f"{settings.file.dir}database/userdata.json", "r") as f:
-      userdata = json.loads(f.read())
-      return(userdata) 
+  class get:
+    def Userdata():
+      with open(f"{settings.file.dir}database/userdata.json", "r") as f:
+        userdata = json.loads(f.read())
+        return(userdata) 
 
-  def getProfiledata():
-    with open(f"{settings.file.dir}database/profiledata.json", "r") as f:
-      profiledata = json.loads(f.read())
-      return(profiledata)
+    def Profiledata():
+      with open(f"{settings.file.dir}database/profiledata.json", "r") as f:
+        profiledata = json.loads(f.read())
+        return(profiledata)
 
-  def getAsset():
-    with open(f"{settings.file.dir}database/assets/assets.json", 'r') as f:
-      assets = json.loads(f.read())
-      return(assets)
-  def getObject():
-    with open(f"{settings.file.dir}database/objectdata.json", "r") as f:
-      objectdata = json.loads(f.read())
-      return(objectdata) 
+    def Asset():
+      with open(f"{settings.file.dir}database/assets/assets.json", 'r') as f:
+        assets = json.loads(f.read())
+        return(assets)
 
-
+    def Object():
+      with open(f"{settings.file.dir}database/objectdata.json", "r") as f:
+        objectdata = json.loads(f.read())
+        return(objectdata) 
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  class set:
+    pass
 
   def request(self, request): # 
     try:
@@ -64,14 +67,14 @@ class database(login):
     if(opperation == 'user'): # A userdata/email request
       if(login.login(data) == 202):
         email = data["login"]
-        userdata = database.getUserdata()
+        userdata = database.get.Userdata()
         user = userdata[email]
         return(json.dumps(user))
       else:
         return(json.dumps(login.login(data)))
 
     elif(opperation == 'profile'): # A profile/username request
-      userdata = database.getProfiledata()
+      userdata = database.get.Profiledata()
       if(data['username'] in userdata):
         username = data['username']
         profiledata = userdata[username]
@@ -80,10 +83,19 @@ class database(login):
         return(400)
 
     elif(opperation == 'asset'): # A asset request
-      pass
+      assets = database.get.Asset()
+      if(data['asset'] in assets):
+        asset = data['asset']
+        return(json.dumps(asset))
+      else:
+        return(400)
 
     elif(opperation == 'object'): # A object request. This is miscellaneous things ex: public goals or featured items etc
-      objectdata = database.getObject()
+      objectdata = database.get.Object()
       return(json.dumps(objectdata))
+
+    elif(opperation == 'set'):
+      pass
+
     else:
       return(400)
