@@ -12,7 +12,7 @@ args = parser.parse_args()
 database = webserver(config.server.ip, config.server.port)
 
 def interface():
-  os.system('python3 interface.py')
+  os.system('python interface.py')
 
 # if(args.interface):
 threading.Thread(target=interface, args=[]).start()  

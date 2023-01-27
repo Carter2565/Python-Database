@@ -59,41 +59,46 @@ class database(login):
   def request(self, request): # 
     try:
       data = json.loads(request)
-      opperation = data['opperation']
+      operation = data['operation']
     except:
-      opperation = None
+      operation = None
     
-    if(opperation == 'user'): # A userdata/email request
-      if(login.login(data) == 202):
-        email = data["login"]
-        userdata = database.get.Userdata()
-        user = userdata[email]
-        return(json.dumps(user))
-      else:
-        return(json.dumps(login.login(data)))
+    if(operation == 'get'):
 
-    elif(opperation == 'profile'): # A profile/username request
-      userdata = database.get.Profiledata()
-      if(data['username'] in userdata):
-        username = data['username']
-        profiledata = userdata[username]
-        return(json.dumps(profiledata))
+      if(request == 'user'): # A userdata/email request
+        if(login.login(data) == 202):
+          email = data["login"]
+          userdata = database.get.Userdata()
+          user = userdata[email]
+          return(json.dumps(user))
+        else:
+          return(json.dumps(login.login(data)))
+
+      elif(request == 'profile'): # A profile/username request
+        userdata = database.get.Profiledata()
+        if(data['username'] in userdata):
+          username = data['username']
+          profiledata = userdata[username]
+          return(json.dumps(profiledata))
+        else:
+          return(400)
+
+      elif(request == 'asset'): # A asset request
+        assets = database.get.Asset()
+        if(data['asset'] in assets):
+          asset = data['asset']
+          return(json.dumps(asset))
+        else:
+          return(400)
+
+      elif(request == 'object'): # A object request. This is miscellaneous things ex: public goals or featured items etc
+        objectdata = database.get.Object()
+        return(json.dumps(objectdata))
+
       else:
         return(400)
 
-    elif(opperation == 'asset'): # A asset request
-      assets = database.get.Asset()
-      if(data['asset'] in assets):
-        asset = data['asset']
-        return(json.dumps(asset))
-      else:
-        return(400)
-
-    elif(opperation == 'object'): # A object request. This is miscellaneous things ex: public goals or featured items etc
-      objectdata = database.get.Object()
-      return(json.dumps(objectdata))
-
-    elif(opperation == 'set'):
+    elif(operation == 'set'):
       pass
 
     else:
