@@ -1,16 +1,13 @@
-{"opperation": "user", "login": "2565tube@gmail.com", "pwd": "098f6bcd4621d373cade4e832627b4f6"},
-{"opperation": "profile", "username": "Carter2565"},
-{"opperation": "assets", "asset":"0"},
-{"opperation": "object"}
+{
+  { "operation":"",
+    "request": "",
+    "login": "",
+    "pwd": "",
+    "username": ""
+  }
 
-<?php
-  $cSession = curl_init();
-  curl_setopt($cSession,CURLOPT_URL,"http://127.0.0.1:8000");
-  curl_setopt($cSession, CURLOPT_POST, true);
-  curl_setopt($cSession, CURLOPT_POSTFIELDS, $request);
-  curl_setopt($cSession,CURLOPT_RETURNTRANSFER,true);
-  curl_setopt($cSession,CURLOPT_HEADER, false); 
-  $result=curl_exec($cSession);
-  curl_close($cSession);
-  return $result;
-?>
+  {"operation":"get", "request": "user", "login": "2565tube@gmail.com", "pwd": "098f6bcd4621d373cade4e832627b4f6"},
+  {"operation":"get","request": "profile", "username": "Carter2565"},
+  {"operation":"get","request": "assets", "asset":"0"},
+  {"operation":"get","request": "object"}
+}
