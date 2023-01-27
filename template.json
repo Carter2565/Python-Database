@@ -1,19 +1,7 @@
-{
-  "opperation": "content",
-  "function": "tags",
-  "login": "2565tube@gmail.com",
-  "pwd": "098f6bcd4621d373cade4e832627b4f6",
-  "parameters": {
-      "item": null,
-      "asset": null,
-      "user": "anonymous"
-  }
-}
---old--  {"opperation": "content","function": "tags","login": "2565tube@gmail.com","pwd": "098f6bcd4621d373cade4e832627b4f6","parameters": {"user": "anonymous"}}
-
-{"opperation": "user", "login": "2565tube@gmail.com", "pwd": "098f6bcd4621d373cade4e832627b4f6"}
-{"opperation": "profile", "username": "Carter2565"}
-{"opperation": "assets", "type": "", "path": ""}
+{"opperation": "user", "login": "2565tube@gmail.com", "pwd": "098f6bcd4621d373cade4e832627b4f6"},
+{"opperation": "profile", "username": "Carter2565"},
+{"opperation": "assets", "asset":"0"},
+{"opperation": "object"}
 
 <?php
   $cSession = curl_init();
