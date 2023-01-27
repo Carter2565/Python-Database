@@ -1,7 +1,6 @@
 import json
 import base64
 from settings import settings
-import pandas as pd
 
 class response:
   def __init__(self, json):
