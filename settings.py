@@ -8,6 +8,10 @@
 #-----------------------------------------------------------------------#
 
 class settings:
+  class interface:
+  # Interface Settings
+    interface = True
+  #-----------------
   class server:
   # Database Server settings:
     ip = 'localhost'
