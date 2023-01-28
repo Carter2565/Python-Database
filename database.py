@@ -1,114 +1,114 @@
+#-----------------------------------------------------------------------#
+#                         --- Python Database ---
+#
+# Contributors: @Carter2565#5594, 
+# This is the current database for PTSO-Exchange.
+# This project can be used as a template for any python database.
+#
+#-----------------------------------------------------------------------#
+
 import json
+import base64
+from settings import settings
 
 class response:
   def __init__(self, json):
-    self.response = None
     self.request = json
-    database.request(self.request)
-    return(self.response)
-  def error(code):
-    response = code 
+    db = database()
+    # print(self.request)
+    self.response = db.request(str(self.request))
+    # print(self.response)
+
     # 400 Request error
+    # 401 Unauthorized
     # 204 No content to be sent
 
-class content(response):
-  def __init__(self, functionn):
-    self.function = function
-
 class login:
-  def __init__(self):
-    return
-
-class database(login, content):
-  def __init__(self, data):
-    self.json = json.loads(data) 
-  
-  def request(self):
+  def login(data):
     try:
-      opperation = self.json['opperation']
+      email = data["login"] # gets the email
+      pwd = data["pwd"] # gets the password 
+    except KeyError:
+      return(400)
+    userdata = database.get.Userdata() # gets userdata from file
+    try:
+      user = userdata[email] #  Gets user by email.
+    except KeyError:
+      return(400)
+    if (not(pwd == user["pwd"])):
+      user = None
+      return(401)
+    return(202)
+
+class database(login):
+  class get:
+    def Userdata():
+      with open(f"{settings.file.dir}database/userdata.json", "r") as f:
+        userdata = json.loads(f.read())
+        return(userdata) 
+
+    def Profiledata():
+      with open(f"{settings.file.dir}database/profiledata.json", "r") as f:
+        profiledata = json.loads(f.read())
+        return(profiledata)
+
+    def Asset():
+      with open(f"{settings.file.dir}database/assets/assets.json", 'r') as f:
+        assets = json.loads(f.read())
+        return(assets)
+
+    def Object():
+      with open(f"{settings.file.dir}database/objectdata.json", "r") as f:
+        objectdata = json.loads(f.read())
+        return(objectdata) 
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  class set:
+    pass
+
+  def request(self, request): # 
+    try:
+      data = json.loads(request)
+      operation = data['operation']
     except:
-      opperation = None
+      operation = None
     
-    if(opperation == 'content'): # A content request
-      for function in settings.functions:
-        if(function == self.json[function]):
-          pass
+    if(operation == 'get'):
+
+      if(request == 'user'): # A userdata/email request
+        if(login.login(data) == 202):
+          email = data["login"]
+          userdata = database.get.Userdata()
+          user = userdata[email]
+          return(json.dumps(user))
         else:
-          response.error(204)
-    elif(opperation == 'login'): # A login request
+          return(json.dumps(login.login(data)))
+
+      elif(request == 'profile'): # A profile/username request
+        userdata = database.get.Profiledata()
+        if(data['username'] in userdata):
+          username = data['username']
+          profiledata = userdata[username]
+          return(json.dumps(profiledata))
+        else:
+          return(400)
+
+      elif(request == 'asset'): # A asset request
+        assets = database.get.Asset()
+        if(data['asset'] in assets):
+          asset = data['asset']
+          return(json.dumps(asset))
+        else:
+          return(400)
+
+      elif(request == 'object'): # A object request. This is miscellaneous things ex: public goals or featured items etc
+        objectdata = database.get.Object()
+        return(json.dumps(objectdata))
+
+      else:
+        return(400)
+
+    elif(operation == 'set'):
       pass
-    elif(opperation == 'manual'): # A request for a manualy set value
-      pass
+
     else:
-      response.error(400)
-
-
-def getUser(data):
-  f = open(settings.launchDir + "database/userdata.json")
-  x = f.read()
-  email = data["login"]
-  pwd = data["pwd"]
-  userdata = json.loads(x)
-  try:
-    user = userdata[email] #  Gets user by email.
-  except:
-    return('User does not exist')
- # print(user["pwd"])
-  if (not(pwd == user["pwd"])):
-    user = None
-    # print("123456789"+pwd+"pwd")
-    return('User credentials dont match')
-    # raise Exception('User credentials dont match')
-  return(user)
-
-def getProfile(username):
-  with open("database/profiledata.json", "r") as f:
-    data = f.read()
-  userdata = jsonFormatter.loads(data)
-  if username in userdata:
-    return userdata[username]
-  else:
-    return "User does not exist"
-
-
-
-
-def content():
-      def featured():
-        parameters=json["parameters"]
-        asset = parameters["asset"]
-        asset = getAssets(asset)
-        return(jsonFormatter.dumps(asset))
-
-      def profile():
-        parameters=json["parameters"]
-        asset = parameters["asset"]
-        if(asset != None):
-          print(asset)
-          user = getProfile(asset)
-        else:
-          user = getUser(json)
-          print(user)
-        return(jsonFormatter.dumps(user))
-
-      def image():
-        parameters=json["parameters"]
-        asset = parameters["asset"]
-        username = parameters["item"]
-        try:
-          userdata = getProfile(username)
-          image = asset+"/"+userdata[asset]
-        except:
-          image = asset+'/default.png'
-        item = parameters["item"]
-        image = f'python/database/assets/userdata/{image}'
-        with open(image, 'rb') as f:
-          image_data = f.read()
-#        print(image_data)
-        base64_image = base64.b64encode(image_data).decode()
-        return(str(base64_image))
-
-      def tags():
-        tags = getUserdata(json,'tags')
-#        print(tags)
-        return(jsonFormatter.dumps(tags))
+      return(400)
