@@ -1,3 +1,12 @@
+#-----------------------------------------------------------------------#
+#                         --- Python Database ---
+#
+# Contributors: @Carter2565#5594, 
+# This is the current database for PTSO-Exchange.
+# This project can be used as a template for any python database.
+#
+#-----------------------------------------------------------------------#
+
 import json
 import base64
 from settings import settings

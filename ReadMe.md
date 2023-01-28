@@ -39,21 +39,11 @@
   ```json
   {"operation":"get","request": "profile", "username": "Carter2565"},
   ```
-3. A request for a __Users Profile Data__
+3. A request for an __Asset__
   ```json
   {"operation":"get","request": "assets", "asset":"0"},
   ```
-4. A request for a __Users Profile Data__
+4. A request for the __Object File__
   ```json
   {"operation":"get","request": "object"}
   ```
-
-
-#-----------------------------------------------------------------------#
-#                         --- Python Database ---
-#
-# Contributors: @Carter2565#5594, 
-# This is the current database for PTSO-Exchange.
-# This project can be used as a template for any python database.
-#
-#-----------------------------------------------------------------------#

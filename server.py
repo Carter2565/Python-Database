@@ -1,14 +1,13 @@
 #-----------------------------------------------------------------------#
-#                         --- PTSO-Exchange ---
+#                         --- Python Database ---
 #
 # Contributors: @Carter2565#5594, 
-# PTSO-Exchange api webserver.
-# Api.py is just the webserver Extensions.py contains all main functions
+# This is the current database for PTSO-Exchange.
+# This project can be used as a template for any python database.
 #
 #-----------------------------------------------------------------------#
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
-
 import time
 import json
 
