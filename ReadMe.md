@@ -34,7 +34,7 @@
 1. For example this is a request for a __Users Data__
 ##### *  Not to be confused with __peofile data.__
   ```json
-  {"operation":"get", "request": "user", "login": "2565tube@gmail.com", "pwd": "098f6bcd4621d373cade4e832627b4f6"},
+  {"operation":"get", "request": "user", "login": "example@domain.com", "pwd": "098f6bcd4621d373cade4e832627b4f6"},
   ``` 
 2. A request for a __Users Profile Data__
   ```json
