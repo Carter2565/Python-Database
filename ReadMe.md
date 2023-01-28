@@ -1,9 +1,10 @@
 
 # Python Database
-
- Contributors: @Carter2565#5594, 
+ 
  This is the current database for PTSO-Exchange.
  This project can be used as a template for any python database.
+
+  Contributors: ``` @Carter2565#5594 ```
 
 ## How to use:
 ### Launch:
