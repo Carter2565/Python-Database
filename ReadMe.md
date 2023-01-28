@@ -12,7 +12,7 @@
       -interface
         This enables a basic command line interface for testing requests.  For Example:
         
-###       Command-Line
+###       Command-Line Interface
 #
         [Python API] -- Server started http://localhost:8000
 
