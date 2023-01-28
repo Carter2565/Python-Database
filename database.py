@@ -69,11 +69,11 @@ class database(login):
     try:
       data = json.loads(request)
       operation = data['operation']
+      request = data['request']
     except:
       operation = None
     
     if(operation == 'get'):
-
       if(request == 'user'): # A userdata/email request
         if(login.login(data) == 202):
           email = data["login"]
