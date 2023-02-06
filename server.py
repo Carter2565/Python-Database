@@ -8,8 +8,14 @@
 #-----------------------------------------------------------------------#
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from database import response as server
+import http.cookies
+import hashlib
 import time
 import json
+
+def hash_string(string):
+  return hashlib.md5(string.encode()).hexdigest()
 
 class Server(BaseHTTPRequestHandler):
   # def do_GET(self):
@@ -25,8 +31,28 @@ class Server(BaseHTTPRequestHandler):
     # except json.decoder.JSONDecodeError:
     #   print('400 - No json data')
 
+  def do_GET(self):
+    cookie = http.cookies.SimpleCookie(self.headers.get("Cookie"))
+    if "token" in cookie:
+      token = cookie["token"].value
+      asset = self.path.split("/")[1]
+      assetid = asset.split(".")[0]
+      request_data = {"operation":"get", "request": "assets", "asset":assetid}
+      response = server(request_data).response
+      if response["public"] == 1 or hash_string(token + assetid) == response["token"]:
+        self.send_response(200)
+        self.send_header("Content-Type", "application/octet-stream")
+        self.end_headers()
+        with open(asset, "rb") as f:
+            self.wfile.write(f.read())
+        return
+    self.send_response(401)
+    self.send_header("Content-Type", "text/plain")
+    self.end_headers()
+    self.wfile.write("Unauthorized".encode("utf-8"))
+
   def do_POST(self):
-    from database import response as server
+    # from database import response as server
     content_length = int(self.headers['Content-Length'])
     body = self.rfile.read(content_length)
     json_data = json.loads(body)

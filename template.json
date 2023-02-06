@@ -11,4 +11,7 @@
   {"operation":"get","request": "profile", "username": "Carter2565"},
   {"operation":"get","request": "assets", "asset":"0"},
   {"operation":"get","request": "object"}
+
+  {"operation":"set", "request": "user", "login": "2565tube@gmail.com", "pwd": "098f6bcd4621d373cade4e832627b4f6", "fname": "Carter", "lname": "Blair", "username": "Carter2565"},
+  {"operation":"set", "request": "user", "login": "hi@gmail.com", "pwd": "098f6bcd4621d373cade4e832627b4f6", "fname": "Carter", "lname": "Blair", "username": "hi"}
 }

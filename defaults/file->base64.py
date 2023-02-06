@@ -5,6 +5,6 @@ with open(input('What is the file name/location?: '), "rb") as f:
   image = base64.b64encode(file).decode()
   # print(f"\n {image}")
 
-f = open(input('Enter full name for file. Ex: pfp.base64.: '), "a")
+f = open(input('Enter full name for file path. Ex: pfp.base64.: '), "a")
 f.write(image)
 f.close()

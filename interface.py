@@ -17,7 +17,6 @@ while(True):
   if(request == 'exit()'):
     exit(200)
 
-
   response = requests.post(f"http://{settings.server.ip}:{settings.server.port}", json = request)
   response = response.json()
   # print(f'-{error}-')
