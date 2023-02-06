@@ -11,6 +11,7 @@ import os
 import threading
 import argparse
 from server import webserver
+from interface import interface
 from settings import settings as config, settings
 
 parser = argparse.ArgumentParser()
@@ -19,8 +20,8 @@ args = parser.parse_args()
  
 database = webserver(config.server.ip, config.server.port)
 
-def interface():
-  os.system('python interface.py')
+# def interface():
+#   os.system('python interface.py')
 
 if(args.interface or config.interface.interface):
   threading.Thread(target=interface, args=[]).start()  
