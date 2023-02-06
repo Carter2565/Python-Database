@@ -9,6 +9,7 @@
 
 import json
 import base64
+import secrets
 from settings import settings
 
 class response:
@@ -22,6 +23,9 @@ class response:
     # 400 Request error
     # 401 Unauthorized
     # 204 No content to be sent
+
+def generate_token():
+    return secrets.token_hex(16)
 
 class login:
   def login(data):
@@ -63,7 +67,96 @@ class database(login):
         return(objectdata) 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   class set:
-    pass
+    def User(request):
+      client = json.loads(request)
+      def Userdata():
+        userdata = get.Userdata()
+        # data = json.loads(userdata)
+        data = userdata
+        # print(data)
+        login = client['login']
+        if(str(login) not in data):
+
+          data[login] = {}
+          data[login]['fname'] = client['fname']
+          data[login]['lname'] = client['lname']
+          data[login]['pwd'] = client['pwd']
+          data[login]['owned'] = []
+          data[login]['created'] = []
+          data[login]['username'] = client['username']
+          data[login]['token'] = secrets.token_hex(16) # Generates a token
+
+          return(data)
+        else:
+          return(409)
+
+      def Profiledata():
+        # data = json.loads(get.Profiledata())
+        data = get.Profiledata()
+        # print(data)
+        username = client['username']
+        if(str(username) not in data):
+
+          data[username] = {}
+          data[username]['fname'] = client['fname']
+          data[username]['lname'] = client['lname']
+          data[username]['created'] = []
+          data[username]['tags'] = settings.assets.defaults.profile.tags
+          data[username]['about'] = settings.assets.defaults.profile.about
+          data[username]['pfp'] = settings.assets.defaults.profile.pfp
+
+          return(data)
+        else:
+          return(409)
+
+      error = 0
+      try:
+        response = int(str(Userdata()))
+        print(response)
+        if (response in settings.error.codes):
+          error -= 2
+      except TypeError:
+        pass
+      finally:
+        try:
+          response = int(str(Profiledata()))
+          print(print(type(response)))
+          if (response in settings.error.codes):
+            error += 4
+        except TypeError:
+          pass
+        finally:
+          print(f'Error: {error}')
+          if(error == 0):
+            userdata = Userdata()
+            profiledata = Profiledata()
+            with open(f"{settings.file.dir}database/userdata.json", "w") as f:
+              f.write(json.dumps(userdata))
+            with open(f"{settings.file.dir}database/profiledata.json", "w") as f:
+              f.write(json.dumps(profiledata))
+            # get.Userdata = Userdata()
+            # get.Profiledata = Profiledata()
+            # print(f'{get.Userdata}, \n \n{get.Profiledata} \n ')
+            print(f'{get.Userdata()}, \n \n{get.Profiledata()} \n ')
+            return(201)
+          elif(error == -2):
+            # Userdata error
+            print('Userdata Error')
+            print(f'{Userdata()}, \n \n{Profiledata()} \n ')
+            return(206)
+            pass
+          elif(error == 2):
+            # Userdata & Profiledata error
+            print('Userdata & Profiledata error')
+            print(f'{Userdata()}, \n \n{Profiledata()} \n ')
+            return(204)
+            pass
+          elif(error == 4):
+            # Profiedata error
+            print('Profiedata error')
+            print(f'{Userdata()}, \n \n{Profiledata()} \n ')
+            return(206)
+            pass
 
   def request(self, request): # 
     try:

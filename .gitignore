@@ -21,3 +21,17 @@ database/assets.json
 
 test.py
 
+database Backup/profiledata.json
+database Backup/userdata.json
+database Backup/assets/assets.json
+database Backup/assets/assets.json.old
+database Backup/assets/userdata/pfp/Carter2565.gif
+database Backup/assets/userdata/pfp/Carter25652.png
+database Backup/assets/userdata/pfp/default.png
+database Backup/assets/0/asset.json
+database Backup/assets.json
+
+.DS_Store
+
+
+set.info
