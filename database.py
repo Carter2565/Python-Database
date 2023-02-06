@@ -70,7 +70,7 @@ class database(login):
     def User(request):
       client = json.loads(request)
       def Userdata():
-        userdata = get.Userdata()
+        userdata = database.get.Userdata()
         # data = json.loads(userdata)
         data = userdata
         # print(data)
@@ -92,7 +92,7 @@ class database(login):
 
       def Profiledata():
         # data = json.loads(get.Profiledata())
-        data = get.Profiledata()
+        data =database.getProfiledata()
         # print(data)
         username = client['username']
         if(str(username) not in data):
@@ -134,10 +134,8 @@ class database(login):
               f.write(json.dumps(userdata))
             with open(f"{settings.file.dir}database/profiledata.json", "w") as f:
               f.write(json.dumps(profiledata))
-            # get.Userdata = Userdata()
-            # get.Profiledata = Profiledata()
             # print(f'{get.Userdata}, \n \n{get.Profiledata} \n ')
-            print(f'{get.Userdata()}, \n \n{get.Profiledata()} \n ')
+            print(f'{database.get.Userdata()}, \n \n{database.get.Profiledata()} \n ')
             return(201)
           elif(error == -2):
             # Userdata error
