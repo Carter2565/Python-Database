@@ -31,6 +31,13 @@ class Server(BaseHTTPRequestHandler):
     # except json.decoder.JSONDecodeError:
     #   print('400 - No json data')
 
+  def do_OPTIONS(self):
+    self.send_response(200)
+    self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+    self.send_header("Access-Control-Allow-Origin", "*")
+    self.send_header("Access-Control-Allow-Headers", "Content-Type")
+    self.end_headers()
+
   def do_GET(self):
     cookie = http.cookies.SimpleCookie(self.headers.get("Cookie"))
     if "token" in cookie:
@@ -54,18 +61,28 @@ class Server(BaseHTTPRequestHandler):
   def do_POST(self):
     # from database import response as server
     content_length = int(self.headers['Content-Length'])
-    body = self.rfile.read(content_length)
-    json_data = json.loads(body)
+    body = self.rfile.read(content_length).decode('utf-8')
+    # json_data = json.loads(str(body))
+    json_data = body
+    print(body)
+    # print(json_data)
     # print(json_data)
     # response(json_data)
     response = server(json_data).response
 
-    self.send_response(200)
+    # print(response)
+    try:
+      error = int(response)
+      self.send_response(error)
+    except:
+      self.send_response(200)
     self.send_header('Content-type', 'application/json')
+    self.send_header("Access-Control-Allow-Origin", "*")
     self.end_headers()
     # print(str(message)+'-----------')
     self.wfile.write(bytes(str(response), "utf8"))
     # self._send_response(res.response)
+    print(f'\n{response} \n')
 
 class webserver:
   def __init__(self, ip, port):

@@ -11,7 +11,12 @@ from settings import settings
 from database import database
 import requests
 from time import sleep
+import argparse
+import json
 
+parser = argparse.ArgumentParser()
+parser.add_argument('-interface', action='store_true', help='Enables UI')
+args = parser.parse_args()
 
 def interface():
   sleep(1)
@@ -22,9 +27,11 @@ def interface():
       exit(200)
 
 
-    response = requests.post(f"http://{settings.server.ip}:{settings.server.port}", json = request)
+    response = requests.post(f"http://{settings.server.ip}:{settings.server.port}", json = json.loads(request))
     response = response.json()
     # print(f'-{error}-')
+
+    # --------------------------------------- use isinstance ----------------------------------------
     try:
       error = int(response)
     except TypeError:
@@ -35,3 +42,6 @@ def interface():
       else:
         print('\n' + str(response) + '\n')   
   
+
+if(args.interface):
+  interface()

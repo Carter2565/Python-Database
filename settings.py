@@ -9,11 +9,11 @@
 class settings:
   class interface:
   # Interface Settings
-    interface = True
+    interface = False
   #-----------------
   class server:
   # Database Server settings:
-    ip = 'localhost'
+    ip = '192.168.1.146'
     port = 8000
   #-----------------
   class error:
@@ -26,6 +26,7 @@ class settings:
       206:'Partial Content',
       400:'Request error',
       401:'Unauthorized',
+      404:'Not found',
       409:'Conflict',
       500:'Server error'
     }

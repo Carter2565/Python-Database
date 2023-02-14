@@ -38,7 +38,7 @@ class login:
     try:
       user = userdata[email] #  Gets user by email.
     except KeyError:
-      return(400)
+      return(404)
     if (not(pwd == user["pwd"])):
       user = None
       return(401)
@@ -57,7 +57,7 @@ class database(login):
         return(profiledata)
 
     def Asset():
-      with open(f"{settings.file.dir}database/assets/assets.json", 'r') as f:
+      with open(f"{settings.file.dir}database/assets.json", 'r') as f:
         assets = json.loads(f.read())
         return(assets)
 
@@ -68,7 +68,7 @@ class database(login):
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   class set:
     def User(request):
-      client = json.loads(request)
+      client = request
       def Userdata():
         userdata = database.get.Userdata()
         # data = json.loads(userdata)
@@ -92,7 +92,7 @@ class database(login):
 
       def Profiledata():
         # data = json.loads(get.Profiledata())
-        data =database.getProfiledata()
+        data =database.get.Profiledata()
         # print(data)
         username = client['username']
         if(str(username) not in data):
@@ -112,7 +112,7 @@ class database(login):
       error = 0
       try:
         response = int(str(Userdata()))
-        print(response)
+        # print(response)
         if (response in settings.error.codes):
           error -= 2
       except TypeError:
@@ -120,13 +120,13 @@ class database(login):
       finally:
         try:
           response = int(str(Profiledata()))
-          print(print(type(response)))
+          # print(print(type(response)))
           if (response in settings.error.codes):
             error += 4
         except TypeError:
           pass
         finally:
-          print(f'Error: {error}')
+          # print(f'Error: {error}')
           if(error == 0):
             userdata = Userdata()
             profiledata = Profiledata()
@@ -135,35 +135,40 @@ class database(login):
             with open(f"{settings.file.dir}database/profiledata.json", "w") as f:
               f.write(json.dumps(profiledata))
             # print(f'{get.Userdata}, \n \n{get.Profiledata} \n ')
-            print(f'{database.get.Userdata()}, \n \n{database.get.Profiledata()} \n ')
+            # print(f'{database.get.Userdata()}, \n \n{database.get.Profiledata()} \n ')
             return(201)
           elif(error == -2):
             # Userdata error
-            print('Userdata Error')
-            print(f'{Userdata()}, \n \n{Profiledata()} \n ')
+            # print('Userdata Error')
+            # print(f'{Userdata()}, \n \n{Profiledata()} \n ')
             return(206)
             pass
           elif(error == 2):
             # Userdata & Profiledata error
-            print('Userdata & Profiledata error')
-            print(f'{Userdata()}, \n \n{Profiledata()} \n ')
-            return(204)
+            # print('Userdata & Profiledata error')
+            # print(f'{Userdata()}, \n \n{Profiledata()} \n ')
+            return(409)
             pass
           elif(error == 4):
             # Profiedata error
-            print('Profiedata error')
-            print(f'{Userdata()}, \n \n{Profiledata()} \n ')
+            # print('Profiedata error')
+            # print(f'{Userdata()}, \n \n{Profiledata()} \n ')
             return(206)
             pass
 
   def request(self, request): # 
     try:
       data = json.loads(request)
+    except:
+      pass
+    try:
       operation = data['operation']
-      request = data['request']
     except:
       operation = None
-    
+    try:
+      request = data['request']
+    except:
+      request = None
     if(operation == 'get'):
       if(request == 'user'): # A userdata/email request
         if(login.login(data) == 202):
@@ -185,8 +190,9 @@ class database(login):
 
       elif(request == 'asset'): # A asset request
         assets = database.get.Asset()
-        if(data['asset'] in assets):
-          asset = data['asset']
+        # print(data['asset'])
+        if(str(data['asset']) in assets):
+          asset = assets[str(data['asset'])]
           return(json.dumps(asset))
         else:
           return(400)
@@ -199,7 +205,11 @@ class database(login):
         return(400)
 
     elif(operation == 'set'):
-      pass
+      if(request == 'user'):
+        return(database.set.User(data))
 
-    else:
-      return(400)
+    elif(operation == 'login'):
+      try:
+        return(login.login(data))
+      except:
+        return(400)

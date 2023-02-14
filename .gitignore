@@ -8,9 +8,11 @@ __pycache__/settings.cpython-38.pyc
 __pycache__/server.cpython-38.pyc
 __pycache__/database.cpython-38.pyc
 __pycache__/interface.cpython-38.pyc
+__pycache__/interface.cpython-311.pyc
 
 database/profiledata.json
 database/userdata.json
+database/objectdata.json
 database/assets/assets.json
 database/assets/assets.json.old
 database/assets/userdata/pfp/Carter2565.gif
@@ -35,3 +37,5 @@ database Backup/assets.json
 
 
 set.info
+
+

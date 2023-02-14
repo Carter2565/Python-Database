@@ -6,12 +6,24 @@
     "pwd": "",
     "username": ""
   },
+  
+  { 
+    "operation":"",
+    "request": "",
+    "login": "",
+    "pwd": "",
+    "fname": "", 
+    "lname": "", 
+    "username": ""
+  },
 
-  {"operation":"get", "request": "user", "login": "example@domain.com", "pwd": "098f6bcd4621d373cade4e832627b4f6"},
+  {"operation":"login", "login": "2565tube@gmail.com", "pwd": "098f6bcd4621d373cade4e832627b4f6"},
+
+  {"operation":"get","request": "user", "login": "example@domain.com", "pwd": "098f6bcd4621d373cade4e832627b4f6"},
   {"operation":"get","request": "profile", "username": "Username"},
   {"operation":"get","request": "assets", "asset":"0"},
-  {"operation":"get","request": "object"}
+  {"operation": "get", "request": "object"}
 
   {"operation":"set", "request": "user", "login": "2565tube@gmail.com", "pwd": "098f6bcd4621d373cade4e832627b4f6", "fname": "Carter", "lname": "Blair", "username": "Carter2565"},
-  {"operation":"set", "request": "user", "login": "hi@gmail.com", "pwd": "098f6bcd4621d373cade4e832627b4f6", "fname": "Carter", "lname": "Blair", "username": "hi"}
+  {"operation":"set", "request": "user", "login": "hi0@gmail.com", "pwd": "098f6bcd4621d373cade4e832627b4f6", "fname": "Carter", "lname": "Blair", "username": "hi0"}
 }
