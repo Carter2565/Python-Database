@@ -13,7 +13,7 @@ class settings:
   #-----------------
   class server:
   # Database Server settings:
-    ip = '192.168.1.146'
+    ip = 'localhost'
     port = 8000
   #-----------------
   class error:
