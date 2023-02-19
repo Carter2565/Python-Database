@@ -5,7 +5,7 @@
     "login": "",
     "pwd": "",
     "username": ""
-  },
+  }
   
   { 
     "operation":"",
@@ -25,5 +25,5 @@
   {"operation": "get", "request": "object"}
 
   {"operation":"set", "request": "user", "login": "2565tube@gmail.com", "pwd": "098f6bcd4621d373cade4e832627b4f6", "fname": "Carter", "lname": "Blair", "username": "Carter2565"},
-  {"operation":"set", "request": "user", "login": "hi0@gmail.com", "pwd": "098f6bcd4621d373cade4e832627b4f6", "fname": "Carter", "lname": "Blair", "username": "hi0"}
+  {"operation":"set", "request": "profile", "login": "hi0@gmail.com", "pwd": "098f6bcd4621d373cade4e832627b4f16", "fname": "null", "lname": "null", "username": "hi0", "data":"{\"fname\":\"Carter\",\"lname\":\"Blair\",\"created\":[0,1,2,3,4],\"servertags\":[\"Site Owner\"],\"usertags\":[\"CDS\",\"Test\"],\"about\":\"This is Carter's about page\",\"pfp\":\"Carter2565.pfp.gif\"}"}
 }

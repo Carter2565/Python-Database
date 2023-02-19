@@ -70,10 +70,7 @@ class database(login):
     def User(request):
       client = request
       def Userdata():
-        userdata = database.get.Userdata()
-        # data = json.loads(userdata)
-        data = userdata
-        # print(data)
+        data = database.get.Userdata()
         login = client['login']
         if(str(login) not in data):
 
@@ -81,8 +78,6 @@ class database(login):
           data[login]['fname'] = client['fname']
           data[login]['lname'] = client['lname']
           data[login]['pwd'] = client['pwd']
-          data[login]['owned'] = []
-          data[login]['created'] = []
           data[login]['username'] = client['username']
           data[login]['token'] = secrets.token_hex(16) # Generates a token
 
@@ -91,17 +86,17 @@ class database(login):
           return(409)
 
       def Profiledata():
-        # data = json.loads(get.Profiledata())
-        data =database.get.Profiledata()
-        # print(data)
+        data = database.get.Profiledata()
         username = client['username']
         if(str(username) not in data):
 
           data[username] = {}
           data[username]['fname'] = client['fname']
           data[username]['lname'] = client['lname']
+          data[username]['owned'] = []
           data[username]['created'] = []
-          data[username]['tags'] = settings.assets.defaults.profile.tags
+          data[username]['servertags'] = settings.assets.defaults.profile.tags
+          data[username]['usertags'] = []
           data[username]['about'] = settings.assets.defaults.profile.about
           data[username]['pfp'] = settings.assets.defaults.profile.pfp
 
@@ -112,7 +107,6 @@ class database(login):
       error = 0
       try:
         response = int(str(Userdata()))
-        # print(response)
         if (response in settings.error.codes):
           error -= 2
       except TypeError:
@@ -126,7 +120,6 @@ class database(login):
         except TypeError:
           pass
         finally:
-          # print(f'Error: {error}')
           if(error == 0):
             userdata = Userdata()
             profiledata = Profiledata()
@@ -134,27 +127,42 @@ class database(login):
               f.write(json.dumps(userdata))
             with open(f"{settings.file.dir}database/profiledata.json", "w") as f:
               f.write(json.dumps(profiledata))
-            # print(f'{get.Userdata}, \n \n{get.Profiledata} \n ')
-            # print(f'{database.get.Userdata()}, \n \n{database.get.Profiledata()} \n ')
             return(201)
+
           elif(error == -2):
-            # Userdata error
-            # print('Userdata Error')
-            # print(f'{Userdata()}, \n \n{Profiledata()} \n ')
             return(206)
             pass
+
           elif(error == 2):
-            # Userdata & Profiledata error
-            # print('Userdata & Profiledata error')
-            # print(f'{Userdata()}, \n \n{Profiledata()} \n ')
             return(409)
             pass
+
           elif(error == 4):
-            # Profiedata error
-            # print('Profiedata error')
-            # print(f'{Userdata()}, \n \n{Profiledata()} \n ')
             return(206)
             pass
+    
+    
+    def Profile(request):
+      client = request
+      def Profiledata(Profiledata):
+        data = database.get.Profiledata()
+        username = client['username']
+        if(str(username) in data):
+          data[username] = json.loads(Profiledata)
+          return(data)
+        else:
+          return(404)
+
+      if(login.login(request) == 202):
+        response = Profiledata(request['data'])
+        if(response != 404):
+          with open(f"{settings.file.dir}database/profiledata.json", "w") as f:
+            f.write(json.dumps(response))
+          return(202)
+        return(response)
+      else:
+        return(json.dumps(login.login(request)))
+
 
   def request(self, request): # 
     try:
@@ -207,6 +215,9 @@ class database(login):
     elif(operation == 'set'):
       if(request == 'user'):
         return(database.set.User(data))
+      
+      if(request == 'profile'):
+        return(database.set.Profile(data))
 
     elif(operation == 'login'):
       try:
