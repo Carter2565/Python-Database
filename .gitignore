@@ -9,17 +9,23 @@ __pycache__/server.cpython-38.pyc
 __pycache__/database.cpython-38.pyc
 __pycache__/interface.cpython-38.pyc
 __pycache__/interface.cpython-311.pyc
+__pycache__/updater.cpython-311.pyc
 
 database/profiledata.json
 database/userdata.json
 database/objectdata.json
-database/assets/assets.json
-database/assets/assets.json.old
-database/assets/userdata/pfp/Carter2565.gif
-database/assets/userdata/pfp/Carter25652.png
-database/assets/userdata/pfp/default.png
-database/assets/0/asset.json
 database/assets.json
+database/assets/0.cover.png
+database/assets/1.cover.png
+database/assets/2.cover.jpeg
+database/assets/3.cover.jpeg
+database/assets/4.cover.png
+
+database/assets/.old/assets.json.old
+database/assets/.old/userdata/pfp/default.png
+database/assets/.old/userdata/pfp/Carter2565.gif
+database/assets/.old/userdata/pfp/Carter25652.png
+database/assets/Carter2565.pfp.gif
 
 test.py
 
@@ -34,9 +40,6 @@ database Backup/assets/0/asset.json
 database Backup/assets.json
 
 .DS_Store
-
-
 set.info
-
-
 request_log.txt
+example.txt

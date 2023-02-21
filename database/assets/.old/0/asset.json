@@ -1,0 +1,9 @@
+{
+    "public": 1,
+    "title": "Test Asset 0",
+    "description": "This is a teast item descripion",
+    "asset#": 5,
+    "assets": [
+      "0.pdf"
+    ]
+ }

@@ -8,8 +8,9 @@
 #-----------------------------------------------------------------------#
 
 import os
-import threading
+import updater
 import argparse
+import threading
 from server import webserver
 from interface import interface
 from settings import settings as config, settings
@@ -22,6 +23,8 @@ database = webserver(config.server.ip, config.server.port)
 
 # def interface():
 #   os.system('python interface.py')
+
+updater.update()
 
 if(args.interface or config.interface.interface):
   threading.Thread(target=interface, args=[]).start()  

@@ -12,18 +12,20 @@
     "request": "",
     "login": "",
     "pwd": "",
+    "username": "",
     "fname": "", 
     "lname": "", 
-    "username": ""
+    "data":"",
   },
 
   {"operation":"login", "login": "2565tube@gmail.com", "pwd": "098f6bcd4621d373cade4e832627b4f6"},
 
   {"operation":"get","request": "user", "login": "example@domain.com", "pwd": "098f6bcd4621d373cade4e832627b4f6"},
   {"operation":"get","request": "profile", "username": "Username"},
-  {"operation":"get","request": "assets", "asset":"0"},
+  {"operation":"get","request": "asset", "asset":"0"},
   {"operation": "get", "request": "object"}
 
-  {"operation":"set", "request": "user", "login": "2565tube@gmail.com", "pwd": "098f6bcd4621d373cade4e832627b4f6", "fname": "Carter", "lname": "Blair", "username": "Carter2565"},
-  {"operation":"set", "request": "profile", "login": "hi0@gmail.com", "pwd": "098f6bcd4621d373cade4e832627b4f16", "fname": "null", "lname": "null", "username": "hi0", "data":"{\"fname\":\"Carter\",\"lname\":\"Blair\",\"created\":[0,1,2,3,4],\"servertags\":[\"Site Owner\"],\"usertags\":[\"CDS\",\"Test\"],\"about\":\"This is Carter's about page\",\"pfp\":\"Carter2565.pfp.gif\"}"}
+  {"operation":"set", "request": "user", "login": "2565tube@gmail.com", "pwd": "098f6bcd4621d373cade4e832627b4f6","username": "Carter2565", "fname": "Carter", "lname": "Blair"},
+  {"operation":"set", "request": "profile", "login": "hi0@gmail.com", "pwd": "098f6bcd4621d373cade4e832627b4f16", "username": "hi0", "data":"{\"fname\":\"Carter\",\"lname\":\"Blair\",\"created\":[0,1,2,3,4],\"servertags\":[\"Site Owner\"],\"usertags\":[\"CDS\",\"Test\"],\"about\":\"This is Carter's about page\",\"pfp\":\"Carter2565.pfp.gif\"}"}
+  {"operation":"set","request": "asset", "asset":"0","data":"\"title\":\"Asset 1\", \"description\":\"Asset 1\", \"cover\": \"cover.png\", \"assets\": [\"0.pdf\",\"0.mov\",\"music.mp4\"], \"public\": 1, \"owner\": \"Carter2565\", \"token\": \"feed0ce949fafc670fd1535ff30f488b\" },
 }

@@ -13,7 +13,7 @@ class settings:
   #-----------------
   class server:
   # Database Server settings:
-    ip = 'localhost'
+    ip = '0.0.0.0'
     port = 8000
   #-----------------
   class error:
@@ -46,4 +46,9 @@ class settings:
   class file:
   # File settings:
     dir = './' # For assets Ex: ./database/profiledata.json OR ./database/userdata.json
+    UPLOAD_PATH = './database/assets'
   #---------------
+  class updater:
+  # File settings:
+    BETA = True
+  #-------------

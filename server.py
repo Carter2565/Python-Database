@@ -9,28 +9,18 @@
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from database import response as server
+from settings import settings
 import http.cookies
 import hashlib
 import time
 import json
+import cgi
+import os
 
 def hash_string(string):
   return hashlib.md5(string.encode()).hexdigest()
 
 class Server(BaseHTTPRequestHandler):
-  # def do_GET(self):
-  #   self.send_response(200)
-  #   self.send_header("Content-type", "text/json")
-  #   self.end_headers()
-
-    # content = response((self.path)[7:])
-    # self.wfile.write(bytes(content, "utf-8"))
-
-    # try:
-    #   print(json.loads(str(self.path)[7:]))
-    # except json.decoder.JSONDecodeError:
-    #   print('400 - No json data')
-
   def do_OPTIONS(self):
     self.send_response(200)
     self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
@@ -40,49 +30,126 @@ class Server(BaseHTTPRequestHandler):
 
   def do_GET(self):
     cookie = http.cookies.SimpleCookie(self.headers.get("Cookie"))
-    if "token" in cookie:
-      token = cookie["token"].value
-      asset = self.path.split("/")[1]
-      assetid = asset.split(".")[0]
-      request_data = {"operation":"get", "request": "assets", "asset":assetid}
-      response = server(request_data).response
-      if response["public"] == 1 or hash_string(token + assetid) == response["token"]:
-        self.send_response(200)
-        self.send_header("Content-Type", "application/octet-stream")
-        self.end_headers()
-        with open(asset, "rb") as f:
-            self.wfile.write(f.read())
-        return
-    self.send_response(401)
-    self.send_header("Content-Type", "text/plain")
-    self.end_headers()
-    self.wfile.write("Unauthorized".encode("utf-8"))
+    token = cookie.get("token", "")
+    asset = self.path.split("/")[1]
+    assetid = asset.split(".")[0]
+
+    if assetid.isdigit():
+        request_data = {"operation": "get", "request": "asset", "asset": assetid}
+        response = json.loads(server(json.dumps(request_data)).response)
+
+        if response != 400:
+            if response["public"] == 1 or hash_string(token + assetid) == response["token"]:
+                self.send_response(200)
+                self.send_header("Content-Type", "application/octet-stream")
+                self.end_headers()
+                print(asset)
+                with open(os.path.join(settings.file.dir, "database", "assets", asset), "rb") as f:
+                    self.wfile.write(f.read())
+                return
+            else:
+                self.send_response(401)
+                self.send_header("Content-Type", "text/plain")
+                self.end_headers()
+                self.wfile.write("Unauthorized".encode("utf-8"))
+        else:
+            self.send_response(404)
+            self.send_header("Content-Type", "text/plain")
+            self.end_headers()
+            self.wfile.write("Not Found".encode("utf-8"))
+    else:
+        if os.path.isfile(os.path.join(settings.file.dir, "database", "assets", asset)):
+            self.send_response(200)
+            self.send_header("Content-Type", "application/octet-stream")
+            self.end_headers()
+            print(asset)
+            with open(os.path.join(settings.file.dir, "database", "assets", asset), "rb") as f:
+                self.wfile.write(f.read())
+            return
+        else:
+            self.send_response(404)
+            self.send_header("Content-Type", "text/plain")
+            self.end_headers()
+            self.wfile.write("Not Found".encode("utf-8"))
+
+
 
   def do_POST(self):
-    # from database import response as server
-    content_length = int(self.headers['Content-Length'])
-    body = self.rfile.read(content_length).decode('utf-8')
-    # json_data = json.loads(str(body))
-    json_data = body
-    print(body)
-    # print(json_data)
-    # print(json_data)
-    # response(json_data)
-    response = server(json_data).response
+    content_type = self.headers.get('Content-Type')
 
-    # print(response)
-    try:
-      error = int(response)
-      self.send_response(error)
-    except:
+    if content_type.startswith('multipart/form-data'):
+      # Handle file upload
+      form = cgi.FieldStorage(
+        fp=self.rfile,
+        headers=self.headers,
+        environ={'REQUEST_METHOD': 'POST'}
+      )
+
+      # Get uploaded file
+      uploaded_file = form['file'].file
+      filename, extension = os.path.splitext(form['file'].filename)
+
+      if(os.path.isfile(os.path.join(settings.file.UPLOAD_PATH,f'{filename}{extension}'))):
+        x = 0
+        while(os.path.isfile(os.path.join(settings.file.UPLOAD_PATH,f'{filename}{x}{extension}'))):
+          x += 1
+        file = f'{filename}{x}{extension}'
+      else:
+        file = f'{filename}{extension}'
+
+      # Save uploaded file to disk
+      with open(os.path.join(settings.file.UPLOAD_PATH, file), 'wb') as f:
+        f.write(uploaded_file.read())
+
+      # Send response
       self.send_response(200)
-    self.send_header('Content-type', 'application/json')
-    self.send_header("Access-Control-Allow-Origin", "*")
-    self.end_headers()
-    # print(str(message)+'-----------')
-    self.wfile.write(bytes(str(response), "utf8"))
-    # self._send_response(res.response)
-    print(f'\n{response} \n')
+      self.send_header('Content-type', 'text/plain')
+      self.end_headers()
+      self.wfile.write('File uploaded successfully'.encode('utf-8'))
+    else:
+      # Handle regular POST request
+      content_length = int(self.headers['Content-Length'])
+      body = self.rfile.read(content_length).decode('utf-8')
+      json_data = body
+      print(body)
+
+      response = server(json_data).response
+
+      try:
+        error = int(response)
+        self.send_response(error)
+      except:
+        self.send_response(200)
+
+      self.send_header('Content-type', 'application/json')
+      self.send_header("Access-Control-Allow-Origin", "*")
+      self.end_headers()
+
+      self.wfile.write(bytes(str(response), "utf8"))
+      print(f'\n{response} \n')
+
+
+  # def do_POST(self):
+  #     content_length = int(self.headers['Content-Length'])
+  #     body = self.rfile.read(content_length).decode('utf-8')
+  #     json_data = body
+  #     print(body)
+
+  #     response = server(json_data).response
+
+  #     try:
+  #         error = int(response)
+  #         self.send_response(error)
+  #     except:
+  #         self.send_response(200)
+
+  #     self.send_header('Content-type', 'application/json')
+  #     self.send_header("Access-Control-Allow-Origin", "*")
+  #     self.end_headers()
+
+  #     self.wfile.write(bytes(str(response), "utf8"))
+  #     print(f'\n{response} \n')
+
 
 class webserver:
   def __init__(self, ip, port):
