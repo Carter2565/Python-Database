@@ -20,6 +20,14 @@ import os
 def hash_string(string):
   return hashlib.md5(string.encode()).hexdigest()
 
+def is_blocked(client_ip):
+    with open('blockedips.lst', 'r') as f:
+        ips = f.read().split('\n')
+        if client_ip in ips:
+            return True
+        else:
+            return False
+
 class Server(BaseHTTPRequestHandler):
   def do_OPTIONS(self):
     self.send_response(200)
@@ -33,6 +41,13 @@ class Server(BaseHTTPRequestHandler):
     token = cookie.get("token", "")
     asset = self.path.split("/")[1]
     assetid = asset.split(".")[0]
+
+    if is_blocked(self.client_address[0]):
+      self.send_response(403)
+      self.send_header('Content-Type', 'text/plain')
+      self.end_headers()
+      self.wfile.write(b'Access denied')
+      return
 
     if assetid.isdigit():
         request_data = {"operation": "get", "request": "asset", "asset": assetid}
@@ -73,9 +88,15 @@ class Server(BaseHTTPRequestHandler):
             self.wfile.write("Not Found".encode("utf-8"))
 
 
-
   def do_POST(self):
     content_type = self.headers.get('Content-Type')
+
+    if is_blocked(self.client_address[0]):
+      self.send_response(403)
+      self.send_header('Content-Type', 'text/plain')
+      self.end_headers()
+      self.wfile.write(b'Access denied')
+      return
 
     if content_type.startswith('multipart/form-data'):
       # Handle file upload
@@ -127,28 +148,6 @@ class Server(BaseHTTPRequestHandler):
 
       self.wfile.write(bytes(str(response), "utf8"))
       print(f'\n{response} \n')
-
-
-  # def do_POST(self):
-  #     content_length = int(self.headers['Content-Length'])
-  #     body = self.rfile.read(content_length).decode('utf-8')
-  #     json_data = body
-  #     print(body)
-
-  #     response = server(json_data).response
-
-  #     try:
-  #         error = int(response)
-  #         self.send_response(error)
-  #     except:
-  #         self.send_response(200)
-
-  #     self.send_header('Content-type', 'application/json')
-  #     self.send_header("Access-Control-Allow-Origin", "*")
-  #     self.end_headers()
-
-  #     self.wfile.write(bytes(str(response), "utf8"))
-  #     print(f'\n{response} \n')
 
 
 class webserver:
